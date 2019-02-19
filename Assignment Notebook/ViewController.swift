@@ -8,13 +8,37 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDataSource {
 
+    @IBOutlet weak var tableView: UITableView!
+    
+    var Assignments: [Assignment] = []
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        tableView.dataSource = self
+        
+        let assignmentOne = Assignment(name: "Read Chapter 4")
+        let assignmentTwo = Assignment(name: "Worksheet 2.4")
+        let assignmentThree = Assignment(name: "MEL-CON")
+        Assignments = [assignmentOne, assignmentTwo, assignmentThree]
     }
 
-
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return Assignments.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "myCell") {
+            let currentAssignmentName = Assignments[indexPath.row].name
+            cell.textLabel?.text = currentAssignmentName
+            return cell
+        } else {
+            return UITableViewCell()
+        }
+    }
+    
 }
 
